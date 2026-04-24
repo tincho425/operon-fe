@@ -1,0 +1,4 @@
+registry=https://verdaccio.iridiumrobotics.com.ar/
+auto-install-peers=true
+//verdaccio.iridiumrobotics.com.ar/:_auth="aXJpZGl1bToyMGlyaWRpdW0yNGljbA=="
+package-manager=pnpm@10.4.1
