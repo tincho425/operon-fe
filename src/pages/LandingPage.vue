@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import OperonMark from '@/components/OperonMark.vue'
 
 const dark = ref(false)
+
+// Used via v-bind() in <style> — bypasses CSS var resolution in Vuetify context
+const gridColor = computed(() => dark.value ? '#26262a' : '#e6e6e8')
 
 function toggleDark() {
   dark.value = !dark.value
@@ -430,13 +433,10 @@ $$ <span class="kw">LANGUAGE</span> sql;</pre>
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.78);
+  background: v-bind("dark ? 'rgba(10,10,10,0.72)' : 'rgba(255,255,255,0.78)'");
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
   backdrop-filter: saturate(180%) blur(10px);
   border-bottom: 1px solid var(--line);
-
-  :global(.theme-dark) & {
-    background: rgba(10, 10, 10, 0.72);
-  }
 }
 
 .lnav-inner {
@@ -507,9 +507,10 @@ $$ <span class="kw">LANGUAGE</span> sql;</pre>
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    linear-gradient(v-bind(gridColor) 1px, transparent 1px),
+    linear-gradient(90deg, v-bind(gridColor) 1px, transparent 1px);
   background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 30% 40%, black 30%, transparent 70%);
   mask-image: radial-gradient(ellipse 80% 60% at 30% 40%, black 30%, transparent 70%);
   opacity: 0.7;
 }

@@ -102,7 +102,7 @@ async function submit(e: Event) {
 
     <!-- ─── Right: ambient panel (same as login) ─────────────────────── -->
     <div class="auth-ambient">
-      <div class="grid-bg ambient-grid" />
+      <div class="ambient-grid" />
       <div class="ambient-inner">
         <div class="ambient-rings">
           <div v-for="(_, i) in 4" :key="i" class="ambient-ring" :style="{ '--i': i }" />
@@ -285,6 +285,11 @@ async function submit(e: Event) {
   position: absolute;
   inset: 0;
   opacity: 0.6;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
 }
 
 .ambient-inner {

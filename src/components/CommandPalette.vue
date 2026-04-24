@@ -187,6 +187,7 @@ function pickSystem(id: string) {
   inset: 0;
   z-index: 200;
   background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: flex-start;

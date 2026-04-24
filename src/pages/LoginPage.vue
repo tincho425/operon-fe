@@ -145,7 +145,7 @@ async function submit(e: Event) {
 
     <!-- ─── Right: ambient panel ─────────────────────────────────────── -->
     <div class="auth-ambient">
-      <div class="grid-bg ambient-grid" />
+      <div class="ambient-grid" />
 
       <svg viewBox="0 0 600 600" class="ambient-svg">
         <defs>
@@ -375,6 +375,11 @@ async function submit(e: Event) {
   position: absolute;
   inset: 0;
   opacity: 0.6;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
 }
 
 .ambient-svg {

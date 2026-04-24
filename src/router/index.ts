@@ -4,6 +4,13 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // ── Public / marketing ───────────────────────────────────────────────────
+    {
+      path: '/',
+      name: 'landing',
+      component: () => import('@/pages/LandingPage.vue'),
+    },
+
     // ── Auth pages (no shell) ────────────────────────────────────────────────
     {
       path: '/login',
@@ -18,7 +25,7 @@ const router = createRouter({
 
     // ── App shell ────────────────────────────────────────────────────────────
     {
-      path: '/',
+      path: '/app',
       component: DefaultLayout,
       children: [
         {
@@ -27,7 +34,7 @@ const router = createRouter({
           component: () => import('@/pages/OverviewPage.vue'),
         },
         {
-          // Catch-all: every other path renders IrApp with the current URL
+          // Catch-all: every other /app/* path renders IrApp with the current URL
           // as id_resolver — same pattern as bfluid-fe-v3/pages/[...slug].vue
           path: ':pathMatch(.*)*',
           name: 'icl',
