@@ -1,0 +1,348 @@
+// ─── Reset ─────────────────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// ─── Design Tokens — exact from tokens.css ─────────────────────────────────
+:root {
+  // Light mode surface palette
+  --paper:       #ffffff;
+  --paper-2:     #fafafa;
+  --paper-3:     #f4f4f5;
+  --line:        #e6e6e8;
+  --line-strong: #d4d4d8;
+
+  // Ink
+  --ink:   #0a0a0a;
+  --ink-2: #18181b;
+  --ink-3: #3f3f46;
+  --muted:   #71717a;
+  --muted-2: #a1a1aa;
+
+  // Accent — indigo default
+  --accent:      #3d5afe;
+  --accent-soft: #eef1ff;
+  --accent-ink:  #ffffff;
+
+  // Semantic
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger:  #ef4444;
+
+  // Typography
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  // Radii
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-xl: 14px;
+}
+
+// ─── Dark Mode ─────────────────────────────────────────────────────────────
+.theme-dark {
+  --paper:       #0a0a0a;
+  --paper-2:     #111113;
+  --paper-3:     #17171a;
+  --line:        #26262a;
+  --line-strong: #3a3a40;
+  --ink:         #fafafa;
+  --ink-2:       #e4e4e7;
+  --ink-3:       #a1a1aa;
+  --muted:       #71717a;
+  --muted-2:     #52525b;
+  --accent-soft: #1a1f3a;
+}
+
+// ─── Accent Variants ───────────────────────────────────────────────────────
+.accent-indigo  { --accent: #3d5afe; --accent-soft: #eef1ff; }
+.accent-indigo.theme-dark  { --accent: #6478ff; --accent-soft: #1a1f3a; }
+.accent-emerald { --accent: #10b981; --accent-soft: #ecfdf5; }
+.accent-emerald.theme-dark { --accent: #34d399; --accent-soft: #0f2a22; }
+.accent-violet  { --accent: #7c3aed; --accent-soft: #f3efff; }
+.accent-violet.theme-dark  { --accent: #a78bfa; --accent-soft: #241b3e; }
+.accent-amber   { --accent: #f59e0b; --accent-soft: #fff7e8; }
+.accent-amber.theme-dark   { --accent: #fbbf24; --accent-soft: #2a1f0a; }
+
+// ─── Base ───────────────────────────────────────────────────────────────────
+html,
+body {
+  height: 100%;
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#app {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+// ─── Scrollbar ──────────────────────────────────────────────────────────────
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 10px; border: 2px solid var(--paper); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+// ─── App Layout ─────────────────────────────────────────────────────────────
+.app-layout {
+  display: flex;
+  height: 100%;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-scroll {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--paper-2);
+}
+
+// ─── Page Header ────────────────────────────────────────────────────────────
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 28px 0;
+  margin-bottom: 24px;
+
+  .page-title {
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    p {
+      margin-top: 5px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  }
+
+  .page-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+}
+
+.page-body {
+  padding: 0 28px 28px;
+}
+
+// ─── Shared Buttons (op-btn style) ──────────────────────────────────────────
+.op-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  font: 500 13px/1 var(--font-sans);
+  letter-spacing: -0.005em;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease;
+
+  &:hover { background: var(--ink-2); }
+  &:active { transform: translateY(1px); }
+
+  &.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-strong);
+    &:hover { background: var(--paper-2); }
+  }
+
+  &.accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    &:hover { filter: brightness(1.05); }
+  }
+}
+
+// Ghost icon button
+.op-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-md);
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  transition: background 0.12s, color 0.12s;
+
+  &:hover {
+    background: var(--paper-3);
+    color: var(--ink);
+  }
+}
+
+// ─── Shared card ────────────────────────────────────────────────────────────
+.op-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+}
+
+// ─── Utility ────────────────────────────────────────────────────────────────
+.mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
+
+.op-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.op-kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+// ─── Form elements ──────────────────────────────────────────────────────────
+.op-label {
+  font: 500 12px/1 var(--font-sans);
+  color: var(--ink-2);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.op-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 12px;
+  font: 400 13.5px/1 var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus {
+    border-color: var(--ink-3);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+}
+
+// ─── Background patterns ─────────────────────────────────────────────────────
+.grid-bg {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+
+.dots-bg {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+// ─── ICL Content Area placeholder ──────────────────────────────────────────
+.icl-content-area {
+  min-height: 400px;
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--r-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  margin: 0 28px 28px;
+
+  .icl-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+
+    .icl-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+    }
+
+    .icl-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .icl-desc {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.6;
+    }
+
+    .icl-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      background: var(--paper-3);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      color: var(--ink-3);
+      margin-top: 4px;
+    }
+  }
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }

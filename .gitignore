@@ -1,0 +1,5 @@
+dist
+node_modules
+Operon_decompressed
+uploads
+.DS_Store
