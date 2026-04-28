@@ -45,7 +45,7 @@ async function submit(e: Event) {
   // Placeholder: navigate to app after simulated delay
   await new Promise(r => setTimeout(r, 600))
   loading.value = false
-  router.push('/')
+  router.push('/app')
 }
 </script>
 
